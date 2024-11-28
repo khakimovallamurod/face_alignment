@@ -1,0 +1,4 @@
+# library for face detection and face landmark detection
+dlib==19.24.6 # for mac  brew install cmake   
+# library for image processing
+opencv-python 
