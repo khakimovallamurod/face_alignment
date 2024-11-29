@@ -22,10 +22,8 @@ while True:
     cv2.imshow("frame", frame)
 
     # Convert to grayscale
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
    
-
-
     # Detect faces
     faces = detector(gray)
 
@@ -38,40 +36,24 @@ while True:
 
         # Crop face
         face_img = frame[top:bottom, left:right]
-        # Show face
-        cv2.imshow("face", face_img)
+        face_img = cv2.resize(face_img, (224, 224))
+        # landmarks
+        landmarks = predictor(gray, face)
+        for n in range(0,5):
+            x = landmarks.part(n).x
+            y = landmarks.part(n).y
+            face_img_landmark = cv2.circle(face_img, (x, y), 4, (255, 0, 0), -1)
+            # Show face
+            cv2.imshow("face_img_landmark", face_img_landmark)
     # Wait for key press
     key = cv2.waitKey(1)
     # If key 'q' is pressed
     if key == ord("q"):
         break
- 
- 
- 
 
-# # Read image
-# img = cv2.imread("face.jpg")
-# # Convert to grayscale
-# gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-# # Detect faces
-# faces = detector(gray)
-
-# # Loop through faces
-# for face in faces:
-#     top = face.top()
-#     bottom = face.bottom()
-#     left = face.left()
-#     right = face.right()
-
-#     # Crop face
-#     face_img = img[top:bottom, left:right]
-#     # Show face
-#     cv2.imshow("face", face_img)
-#     # Wait for key press
-#     cv2.waitKey(0)
-# Close window
 cv2.destroyAllWindows()
 
 
   
+
+    
